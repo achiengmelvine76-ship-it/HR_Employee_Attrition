@@ -128,13 +128,14 @@ ROUND (AVG(CASE WHEN attrition = 'Yes' THEN 1 ELSE 0 END),2) AS attrition_rate
 FROM employee_attrition
 GROUP BY age_group
 
-/* Job Satisfaction Correlation
-What is the relationship between job satisfaction scores and attrition? */
+## /* Job Satisfaction Correlation
 SELECT 
-attrition,
-jobsatisfaction,
-RANK() OVER(PARTITION BY attrition ORDER BY jobsatisfaction desc)
+    attrition,
+    COUNT(*) AS employee_count,
+    ROUND(AVG(jobsatisfaction), 2) AS avg_satisfaction
 FROM employee_attrition
+GROUP BY attrition;
+
 
 /*Overtime Work Impact
 How do attrition rates compare between employees who work overtime and those who don't?*/
@@ -201,3 +202,4 @@ CREATE OR REPLACE VIEW Attritition_Yes AS
 
 --Deleting one view
 DROP VIEW attrtition_yes
+
